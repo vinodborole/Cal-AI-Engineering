@@ -1,0 +1,26 @@
+# GitHub Pages Configuration
+
+# This file is optional but helps with GitHub Pages setup
+# GitHub Pages will automatically serve index.html from the root
+
+# Custom domain (optional)
+# Uncomment and add your domain if you have one
+# domain: ai-engineering.calsoft.com
+
+# Build settings
+# GitHub Pages uses Jekyll by default, but we're using plain HTML
+# This file tells GitHub Pages not to use Jekyll
+
+# Theme: none (we have custom CSS)
+theme: null
+
+# Plugins (none needed for static HTML)
+plugins: []
+
+# Exclude these files from the published site
+exclude:
+  - README.md
+  - .gitignore
+  - node_modules/
+  - .vscode/
+  - .idea/
