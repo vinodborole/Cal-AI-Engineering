@@ -169,18 +169,18 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ===== Counter Animation for Stats =====
-function animateCounter(element, target, duration = 2000) {
+function animateCounter(element, target, suffix = '', duration = 2000) {
     const start = 0;
     const increment = target / (duration / 16);
     let current = start;
-    
+
     const timer = setInterval(() => {
         current += increment;
         if (current >= target) {
-            element.textContent = target;
+            element.textContent = target + suffix;
             clearInterval(timer);
         } else {
-            element.textContent = Math.floor(current);
+            element.textContent = Math.floor(current) + suffix;
         }
     }, 16);
 }
@@ -191,11 +191,16 @@ const statsObserver = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             const statNumbers = entry.target.querySelectorAll('.stat-number');
             statNumbers.forEach(stat => {
-                const text = stat.textContent;
-                const number = parseInt(text);
-                if (!isNaN(number)) {
-                    stat.textContent = '0';
-                    animateCounter(stat, number);
+                const text = stat.textContent.trim();
+                // Extract number and suffix (e.g., "3x" -> number: 3, suffix: "x")
+                const match = text.match(/^(\d+)(.*)$/);
+                if (match) {
+                    const number = parseInt(match[1]);
+                    const suffix = match[2]; // This captures "x", "%", "%+", etc.
+                    if (!isNaN(number)) {
+                        stat.textContent = '0' + suffix;
+                        animateCounter(stat, number, suffix);
+                    }
                 }
             });
             statsObserver.unobserve(entry.target);
